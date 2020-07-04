@@ -4,7 +4,7 @@ FROM alpine:latest
 ADD dist/ /root/dist/
 #
 # Install packages
-RUN apk -U add \
+RUN apk update && apk add --no-cache \
                autoconf \
                bind-tools \
                build-base \
