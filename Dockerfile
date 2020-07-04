@@ -3,13 +3,12 @@ FROM alpine:latest
 # Include dist
 ADD dist/ /root/dist/
 #
-
 # Install packages
 RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     apk -U add \
             git \
             libcap \
-	          py3-pip \
+	    py3-pip \
             python3 \
             python3-dev \
             autoconf \
@@ -31,7 +30,6 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
                py-setuptools \
                python \
                python-dev && \
-    pip install --no-cache-dir --upgrade pip && \
 #
 # Install php sandbox from git
     git clone --depth=1 https://github.com/mushorg/BFR /opt/BFR && \
