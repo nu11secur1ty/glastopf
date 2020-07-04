@@ -3,17 +3,24 @@ FROM alpine:latest
 # Include dist
 ADD dist/ /root/dist/
 #
+
 # Install packages
-RUN apk update && apk add --no-cache \
-               autoconf \
-               bind-tools \
-               build-base \
-#               cython \
-               git \
-               libffi \
-               libffi-dev \
-               libcap \
-               libxslt-dev \
+RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
+    apk -U add \
+            git \
+            libcap \
+	          py3-pip \
+            python3 \
+            python3-dev \
+            autoconf \
+            bind-tools \
+            build-base \
+#           cython \
+            git \
+            libffi \
+            libffi-dev \
+            libcap \
+            libxslt-dev \
                make \
                php7 \
                php7-dev \
