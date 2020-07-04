@@ -1,8 +1,8 @@
-FROM alpine
-
+FROM alpine:latest
+#
 # Include dist
 ADD dist/ /root/dist/
-
+#
 # Install packages
 RUN apk -U --no-cache add \
                autoconf \
@@ -25,7 +25,7 @@ RUN apk -U --no-cache add \
                python \
                python-dev && \
     pip install --no-cache-dir --upgrade pip && \
-
+#
 # Install php sandbox from git
     git clone --depth=1 https://github.com/mushorg/BFR /opt/BFR && \
     cd /opt/BFR && \
@@ -38,7 +38,7 @@ RUN apk -U --no-cache add \
     cd / && \
     rm -rf /opt/BFR /tmp/* /var/tmp/* && \
     echo "zend_extension = "$(find /usr -name bfr.so) >> /etc/php7/php.ini && \
-
+#
 # Install glastopf from git
     git clone --depth=1 https://github.com/mushorg/glastopf.git /opt/glastopf && \
     cd /opt/glastopf && \
@@ -47,13 +47,13 @@ RUN apk -U --no-cache add \
     cd / && \
     rm -rf /opt/glastopf /tmp/* /var/tmp/* && \
     setcap cap_net_bind_service=+ep /usr/bin/python2.7 && \
-
+#
 # Setup user, groups and configs
     addgroup -g 2000 glastopf && \
     adduser -S -H -u 2000 -D -g 2000 glastopf && \
     mkdir -p /etc/glastopf && \
     mv /root/dist/glastopf.cfg /etc/glastopf/ && \
-
+#
 # Clean up
     apk del --purge autoconf \
                     build-base \
@@ -65,7 +65,7 @@ RUN apk -U --no-cache add \
                     py-pip && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
-
+#
 # Set workdir and start glastopf
 STOPSIGNAL SIGINT
 USER glastopf:glastopf
